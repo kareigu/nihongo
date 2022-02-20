@@ -50,7 +50,7 @@ update msg model =
 view : Model -> Html.Html Msg
 view model =
     div [ class "grid m-4" ]
-        [ h1 [ class "flex justify-center font-bold text-4xl text-yellow-500" ] [ text "Elm and Tailwind CSS" ]
+        [ h1 [ class "flex justify-center font-bold text-4xl text-green-500" ] [ text "Elm and Tailwind CSS" ]
         , div [ class "flex justify-center" ] [ viewCounter model ]
         , div [ class "flex justify-center" ] [ a [ href "https://github.com/csaltos/elm-tailwindcss" ] [ text "github.com/csaltos/elm-tailwindcss" ] ]
         ]

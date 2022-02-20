@@ -1,11 +1,9 @@
 module.exports = {
-  purge: {
-    enabled: true,
-    content: [
-      './src/**/*.elm'
-    ]
-  },
-  darkMode: false, // or 'media' or 'class'
+  mode: 'jit',
+  content: [
+    './src/**/*.elm'
+  ],
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {},
   },
