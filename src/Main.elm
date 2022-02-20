@@ -12,12 +12,12 @@ main =
 
 
 type alias Model =
-    Int
+  Int
 
 
 type Msg
-    = Increment
-    | Decrement
+  = Increment
+  | Decrement
 
 
 
@@ -26,7 +26,7 @@ type Msg
 
 init : Model
 init =
-    0
+  0
 
 
 
@@ -35,12 +35,12 @@ init =
 
 update : Msg -> Model -> Model
 update msg model =
-    case msg of
-        Increment ->
-            model + 1
+  case msg of
+    Increment ->
+      model + 1
 
-        Decrement ->
-            model - 1
+    Decrement ->
+      if model > 0 then model - 1 else model
 
 
 
@@ -49,18 +49,22 @@ update msg model =
 
 view : Model -> Html.Html Msg
 view model =
-    div [ class "grid m-4" ]
-        [ h1 [ class "flex justify-center font-bold text-4xl text-green-500" ] [ text "Elm and Tailwind CSS" ]
-        , div [ class "flex justify-center" ] [ viewCounter model ]
-        , div [ class "flex justify-center" ] [ a [ href "https://github.com/csaltos/elm-tailwindcss" ] [ text "github.com/csaltos/elm-tailwindcss" ] ]
-        ]
+  div [ class "grid m-4" ]
+    [ h1 [ class "flex justify-center font-bold text-4xl text-green-500" ] 
+        [ text "Elm and Tailwind CSS" ],
+      div [ class "flex justify-center" ] 
+        [ viewCounter model ]
+    ]
 
 
 viewCounter : Model -> Html.Html Msg
 viewCounter model =
-    div
-        [ class "flex p-4" ]
-        [ button [ class "btn m-4", onClick Decrement ] [ text "-" ]
-        , div [ class "m-4 font-bold text-xl text-gray-600" ] [ text (String.fromInt model) ]
-        , button [ class "btn m-4", onClick Increment ] [ text "+" ]
-        ]
+  div
+    [ class "flex p-4" ]
+    [ button [ class "btn m-4", onClick Decrement ] 
+        [ text "-" ],
+      div [ class "m-4 font-bold text-xl text-gray-600" ] 
+        [ text (String.fromInt model) ],
+      button [ class "btn m-4", onClick Increment ] 
+        [ text "+" ]
+    ]

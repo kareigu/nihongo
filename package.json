@@ -6,7 +6,7 @@
   "license": "MPL-2.0",
   "scripts": {
     "clean": "rm -rf elm-stuff",
-    "compile:elm": "elm make src/Main.elm --output=public/assets/js/elm.js",
+    "compile:elm": "elm make --debug src/Main.elm --output=public/assets/js/elm.js",
     "compile:css": "postcss src/styles.pcss -o public/assets/css/styles.css",
     "compile": "run-p compile:elm compile:css",
     "dev": "run-p watch serve",
