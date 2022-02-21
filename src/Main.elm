@@ -46,9 +46,9 @@ update msg model =
 view : Model -> Html.Html Msg
 view model =
   div [ class "grid m-4" ]
-    [ h1 [ class "text-center font-bold text-4xl text-auburn" ] 
+    [ h1 [ class "text-center font-bold text-4xl text-auburn font-PT-Sans" ] 
         [ text "NIHONGO - 日本語" ],
-      div [ class "flex justify-center" ] 
+      div [ class "flex flex-col justify-center last:mt-auto last:mb-2" ] 
         [ 
           app_view model,
           if model.selectedPage == Menu then 
@@ -83,7 +83,7 @@ main_menu_items =
 main_menu_button : Pages -> Html.Html Msg
 main_menu_button page =
   button [ 
-    class "bg-platinum text-auburn w-32 h-32 m-4 rounded-sm", 
+    class "group bg-platinum text-auburn w-32 h-32 m-4 rounded-sm drop-shadow-md hover:text-raisin-black hover:drop-shadow-2xl", 
     onClick (ChangePage page) 
     ] 
     [ 
@@ -91,8 +91,8 @@ main_menu_button page =
       in
         div [ class "flex flex-col h-full justify-center last:flex-end"]
         [
-          h1 [ class "h-full pt-10 text-4xl"] [ text j ],
-          p [ class "mb-1" ] [ text (String.toUpper r) ]
+          h1 [ class "font-Shippori h-full pt-10 text-4xl group-hover:drop-shadow-2xl"] [ text j ],
+          p [ class "font-PT-Sans mb-1 group-hover:drop-shadow-2xl" ] [ text (String.toUpper r) ]
         ]
     ]
 
@@ -108,7 +108,7 @@ button_inner page =
 
 main_menu : Model -> Html.Html Msg
 main_menu _ =
-  div [class "flex flex-col justify-center items-center"]
+  div [class "flex flex-col justify-center items-center mt-5"]
     [
       div [class "grid grid-cols-2"]
         ( List.map main_menu_button main_menu_items ),

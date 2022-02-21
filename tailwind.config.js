@@ -6,6 +6,11 @@ module.exports = {
   darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        'Kosugi': ['Kosugi', 'sans-serif'],
+        'PT-Sans': ['PT Sans', 'sans-serif'],
+        'Shippori': ['Shippori Antique', 'sans-serif']
+      },
       colors: {
         auburn: '#A31E20',
         platinum: '#DEE0DB',
