@@ -20,7 +20,7 @@ hiragana : Model -> Html.Html Msg
 hiragana _ =
   div [ class "flex flex-col p-4" ]
     [ 
-      h1 [] [ text "hiragana"]
+      h1 [] [ text "hiragana" ]
     ]
 
 
@@ -28,7 +28,7 @@ kanji : Model -> Html.Html Msg
 kanji _ =
   div [ class "flex flex-col p-4" ]
     [ 
-      h1 [] [ text "kanji"]
+      h1 [] [ text "kanji" ]
     ]
 
 
@@ -36,7 +36,7 @@ numbers : Model -> Html.Html Msg
 numbers _ =
   div [ class "flex flex-col p-4" ]
     [ 
-      h1 [] [ text "numbers"]
+      h1 [] [ text "numbers" ]
     ]
 
 combined : Model -> Html.Html Msg
