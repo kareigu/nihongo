@@ -16,36 +16,33 @@ katakana model =
 
 
 hiragana : Model -> Html.Html Msg
-hiragana _ =
-  div [ class "flex flex-col p-4" ]
+hiragana model =
+  div [ class "flex flex-col items-center p-4" ]
     [ 
-      h1 [] [ text "hiragana" ]
+      picking_view model
     ]
 
 
 kanji : Model -> Html.Html Msg
-kanji _ =
-  div [ class "flex flex-col p-4" ]
+kanji model =
+  div [ class "flex flex-col items-center p-4" ]
     [ 
-      h1 [] [ text "kanji" ]
+      picking_view model
     ]
 
 
 numbers : Model -> Html.Html Msg
-numbers _ =
-  div [ class "flex flex-col p-4" ]
+numbers model =
+  div [ class "flex flex-col items-center p-4" ]
     [ 
-      h1 [] [ text "numbers" ]
+      picking_view model
     ]
 
 combined : Model -> Html.Html Msg
 combined model =
-  div [ class "flex flex-col p-4" ]
+  div [ class "flex flex-col items-center p-4" ]
     [ 
-      hiragana model,
-      katakana model,
-      kanji model,
-      numbers model
+      picking_view model
     ]
 
 

@@ -90,7 +90,11 @@ update msg model =
 page_to_bank : Pages -> GlyphList
 page_to_bank page =
   case page of
+    Hiragana -> Glyphs.hiragana
     Katakana -> Glyphs.katakana
+    Kanji -> Glyphs.kanji
+    Numbers -> Glyphs.numbers
+    Combined -> Glyphs.combined
     _ -> Array.fromList []
 
 rolls_to_choices : (List Int) -> (List Glyph) -> GlyphList -> (List Glyph)
