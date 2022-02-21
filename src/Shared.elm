@@ -2,9 +2,11 @@ module Shared exposing (..)
 import Array exposing (Array)
 
 type Msg
-  = ChangePage Pages
+  = NoOp
+  | ChangePage Pages
   | UpdateChoices (List Int, Int) 
   | RollChoices Int
+  | MakeGuess Glyph
 
 type Pages
   = Menu
@@ -15,6 +17,11 @@ type Pages
   | Combined
 
 
+type Guess
+  = NotGuessed
+  | Correct
+  | Wrong
+
 type alias Model =
   {
     choice_data : ChoiceData,
@@ -24,6 +31,7 @@ type alias Model =
 type alias ChoiceData =
   {
     current : Maybe CurrentChoice,
+    guess : Guess,
     bank : GlyphList
   }
 

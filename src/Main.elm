@@ -5,7 +5,7 @@ import Html exposing (button, div, h1, text, span, p)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 
-import Shared exposing (Msg(..), Pages(..), Model, Glyph, GlyphList, CurrentChoice)
+import Shared exposing (Msg(..), Pages(..), Model, Glyph, GlyphList, CurrentChoice, Guess(..))
 import Pages
 import Random
 import Array exposing (Array)
@@ -29,7 +29,8 @@ init _ =
     {
     choice_data = {
       current = Nothing,
-      bank = (Array.fromList [])
+      bank = (Array.fromList []),
+      guess = NotGuessed
     },
     selectedPage = Menu
     },
@@ -50,7 +51,8 @@ update msg model =
           selectedPage = p,
           choice_data = { 
             current = Nothing,
-            bank = page_to_bank p
+            bank = page_to_bank p,
+            guess = NotGuessed
           }
         }, 
         if p == Menu then
@@ -75,6 +77,7 @@ update msg model =
         { model |
           choice_data = {
             bank = model.choice_data.bank,
+            guess = NotGuessed,
             current = Just
               {
                 correct = (get_correct correct rolls model.choice_data.bank),
@@ -85,7 +88,42 @@ update msg model =
         Cmd.none
       )
 
+    MakeGuess guess ->
+      let
+        (selected_choice, correct) = (case model.choice_data.current of
+          Just x ->
+            (
+              (Maybe.withDefault ("E", "Error") 
+                (List.head 
+                  (List.filter (check_guess guess) x.choices)
+                )
+              ), 
+            x.correct)
 
+          Nothing ->
+            (("E", "Error"), ("E", "Error")))
+      in
+      (
+        { model |
+          choice_data = {
+            bank = model.choice_data.bank,
+            current = model.choice_data.current,
+            guess = (if selected_choice == correct then Correct else Wrong)
+          }
+        },
+        Cmd.none
+      )
+
+    NoOp ->
+      (
+        model,
+        Cmd.none
+      )
+
+
+check_guess : Glyph -> Glyph -> Bool
+check_guess x guess =
+  x == guess
 
 page_to_bank : Pages -> GlyphList
 page_to_bank page =
