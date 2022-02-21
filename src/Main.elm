@@ -38,7 +38,7 @@ update msg model =
 view : Model -> Html.Html Msg
 view model =
   div [ class "flex flex-col h-screen m-4 overflow-x-hidden" ]
-    [ h1 [ class "text-center font-bold mt-4 text-4xl text-auburn font-PT-Sans" ] 
+    [ h1 [ class "text-center font-bold mt-3 text-4xl py-2 select-none text-auburn bg-platinum border-4 border-x-auburn border-y-platinum rounded font-PT-Sans" ] 
         [ text "NIHONGO - 日本語" ],
       div [ class "flex flex-col mt-2 mb-2 h-full" ] 
         [ 
@@ -75,7 +75,7 @@ main_menu_items =
 main_menu_button : Pages -> Html.Html Msg
 main_menu_button page =
   button [ 
-    class "group bg-platinum text-auburn w-32 h-32 m-4 rounded-sm drop-shadow-md hover:text-raisin-black hover:drop-shadow-2xl", 
+    class "group bg-platinum text-auburn w-32 h-32 m-4 outline outline-4 outline-cherry-pink hover:outline-auburn hover:outline-offset-2 rounded-sm drop-shadow-md hover:text-raisin-black hover:drop-shadow-2xl", 
     onClick (ChangePage page) 
     ] 
     [ 
