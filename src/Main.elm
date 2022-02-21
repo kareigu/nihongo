@@ -37,22 +37,22 @@ update msg model =
 
 view : Model -> Html.Html Msg
 view model =
-  div [ class "grid m-4" ]
-    [ h1 [ class "text-center font-bold text-4xl text-auburn font-PT-Sans" ] 
+  div [ class "flex flex-col h-screen m-4 overflow-x-hidden" ]
+    [ h1 [ class "text-center font-bold mt-4 text-4xl text-auburn font-PT-Sans" ] 
         [ text "NIHONGO - 日本語" ],
-      div [ class "flex flex-col justify-center last:mt-auto last:mb-2" ] 
+      div [ class "flex flex-col mt-2 mb-2 h-full" ] 
         [ 
           app_view model,
           if model.selectedPage == Menu then 
             span [] []
           else
-            button [ class "btn m-4", onClick (ChangePage Menu) ] [ text "Menu" ]
+            button [ class "btn mx-4 mt-auto mb-10", onClick (ChangePage Menu) ] [ text "Menu" ]
         ]
     ]
 
 app_view : Model -> Html.Html Msg
 app_view model = 
-  div [class "flex flex-col justify-center items-center"]
+  div [class "flex flex-col items-center"]
     [
       case model.selectedPage of
         Menu -> main_menu model
@@ -100,7 +100,7 @@ button_inner page =
 
 main_menu : Model -> Html.Html Msg
 main_menu _ =
-  div [class "flex flex-col justify-center items-center mt-5"]
+  div [class "flex flex-col items-center"]
     [
       div [class "grid grid-cols-2"]
         ( List.map main_menu_button main_menu_items ),
