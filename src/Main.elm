@@ -5,10 +5,11 @@ import Html exposing (button, div, h1, text, span, p)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 
-import Shared exposing (Msg(..), Pages(..), Model, katakana_glyphs, Glyph, GlyphList, CurrentChoice)
+import Shared exposing (Msg(..), Pages(..), Model, Glyph, GlyphList, CurrentChoice)
 import Pages
 import Random
 import Array exposing (Array)
+import Glyphs
 
 
 main : Program () Model Msg
@@ -28,7 +29,7 @@ init _ =
     {
     choice_data = {
       current = Nothing,
-      bank = katakana_glyphs
+      bank = (Array.fromList [])
     },
     selectedPage = Menu
     },
@@ -44,8 +45,6 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     ChangePage p ->
-      let max_index = 3
-      in
       (
         { model | 
           selectedPage = p,
@@ -54,7 +53,10 @@ update msg model =
             bank = page_to_bank p
           }
         }, 
-        Random.generate RollChoices (Random.int 0 max_index)
+        if p == Menu then
+          Cmd.none
+        else
+          Random.generate RollChoices (Random.int 0 3)
       )
 
     RollChoices correct ->
@@ -88,8 +90,8 @@ update msg model =
 page_to_bank : Pages -> GlyphList
 page_to_bank page =
   case page of
-    Katakana -> katakana_glyphs
-    _ -> katakana_glyphs
+    Katakana -> Glyphs.katakana
+    _ -> Array.fromList []
 
 rolls_to_choices : (List Int) -> (List Glyph) -> GlyphList -> (List Glyph)
 rolls_to_choices rolls choices glyphs =

@@ -3,9 +3,7 @@ module Pages exposing (katakana, hiragana, kanji, numbers, combined)
 import Html exposing (h1, div, text, button)
 import Html.Attributes exposing (class)
 
-import Shared exposing (Msg(..), Model, katakana_glyphs, Glyph, ChoiceData)
-import Random
-import Array exposing (Array)
+import Shared exposing (Msg(..), Model, Glyph)
 
 
 katakana : Model -> Html.Html Msg
