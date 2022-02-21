@@ -3,7 +3,9 @@ module Pages exposing (katakana, hiragana, kanji, numbers, combined)
 import Html exposing (h1, div, text, button)
 import Html.Attributes exposing (class)
 
-import Shared exposing (Msg(..), Model)
+import Shared exposing (Msg(..), Model, katakana_glyphs, Glyph, ChoiceData)
+import Random
+import Array exposing (Array)
 
 
 katakana : Model -> Html.Html Msg
@@ -48,6 +50,29 @@ combined model =
       kanji model,
       numbers model
     ]
+
+{- random_glyphs : Array Glyph -> Maybe ChoiceData
+random_glyphs glyphs =
+  let (c, ch) = (get_random_glyphs glyphs)
+  in
+    {}
+
+get_random_glyph : Array Glyph -> Maybe Glyph
+get_random_glyph glyphs =
+  let generator = (Random.int 0 (Array.length glyphs - 1))
+  in
+    (Array.get Random.map glyphs)
+
+get_random_glyphs : Array Glyph -> ((Maybe Glyph), ((Maybe Glyph), (Maybe Glyph), (Maybe Glyph)))
+get_random_glyphs glyphs =
+  (
+    get_random_glyph glyphs,
+    (
+      get_random_glyph glyphs,
+      get_random_glyph glyphs,
+      get_random_glyph glyphs
+    )
+  ) -}
 
 
 glyph_showcase : Model -> String -> Html.Html Msg
