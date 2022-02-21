@@ -1,70 +1,116 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (a, button, div, h1, text)
-import Html.Attributes exposing (class, href)
+import Html exposing (button, div, h1, text, span, p)
+import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
+import Dict exposing (Dict)
+
+import Counter exposing (counter, update_counter)
+import Shared exposing (Msg(..), Pages(..), Model)
+import Pages
 
 
 main : Program () Model Msg
 main =
-    Browser.sandbox { init = init, view = view, update = update }
+  Browser.sandbox 
+    { 
+      init = init, 
+      view = view, 
+      update = update 
+    }
 
 
-type alias Model =
-  Int
-
-
-type Msg
-  = Increment
-  | Decrement
-
-
-
--- INIT
 
 
 init : Model
 init =
-  0
+  {
+    count = 0,
+    selectedPage = Menu
+  }
 
 
-
--- UPDATE
 
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Increment ->
-      model + 1
+    UpdateCounter c -> 
+      { model | count = update_counter c model.count }
+    ChangePage p ->
+      { model | selectedPage = p }
 
-    Decrement ->
-      if model > 0 then model - 1 else model
-
-
-
--- VIEW
 
 
 view : Model -> Html.Html Msg
 view model =
   div [ class "grid m-4" ]
-    [ h1 [ class "flex justify-center font-bold text-4xl text-green-500" ] 
-        [ text "Elm and Tailwind CSS" ],
+    [ h1 [ class "text-center font-bold text-4xl text-auburn" ] 
+        [ text "NIHONGO - 日本語" ],
       div [ class "flex justify-center" ] 
-        [ viewCounter model ]
+        [ 
+          app_view model,
+          if model.selectedPage == Menu then 
+            span [] []
+          else
+            button [ class "btn m-4", onClick (ChangePage Menu) ] [ text "Menu" ]
+        ]
     ]
 
+app_view : Model -> Html.Html Msg
+app_view model = 
+  div [class "flex flex-col justify-center items-center"]
+    [
+      case model.selectedPage of
+        Menu -> main_menu model
+        Hiragana -> Pages.hiragana model
+        Katakana -> Pages.katakana model
+        Kanji -> Pages.kanji model
+        Numbers -> Pages.numbers model
+        Combined -> Pages.combined model
+    ]
 
-viewCounter : Model -> Html.Html Msg
-viewCounter model =
-  div
-    [ class "flex p-4" ]
-    [ button [ class "btn m-4", onClick Decrement ] 
-        [ text "-" ],
-      div [ class "m-4 font-bold text-xl text-gray-600" ] 
-        [ text (String.fromInt model) ],
-      button [ class "btn m-4", onClick Increment ] 
-        [ text "+" ]
+main_menu_items : List Pages
+main_menu_items =
+  [
+    Hiragana,
+    Katakana,
+    Kanji,
+    Numbers
+  ]
+
+main_menu_button : Pages -> Html.Html Msg
+main_menu_button page =
+  button [ 
+    class "bg-platinum text-auburn w-32 h-32 m-4 rounded-sm", 
+    onClick (ChangePage page) 
+    ] 
+    [ 
+      let (r, j) = button_inner page
+      in
+        div [ class "flex flex-col h-full justify-center last:flex-end"]
+        [
+          h1 [ class "h-full pt-10 text-4xl"] [ text j ],
+          p [ class "mb-1" ] [ text (String.toUpper r) ]
+        ]
+    ]
+
+button_inner : Pages -> (String, String)
+button_inner page =
+  case page of  
+    Hiragana -> ("Hiragana", "平仮名")
+    Katakana -> ("Katakana", "片仮名")
+    Kanji -> ("Kanji", "漢字")
+    Numbers -> ("Numbers", "番号")
+    Combined -> ("Combined", "混ぜる")
+    _ -> ("", "")
+
+main_menu : Model -> Html.Html Msg
+main_menu _ =
+  div [class "flex flex-col justify-center items-center"]
+    [
+      div [class "grid grid-cols-2"]
+        ( List.map main_menu_button main_menu_items ),
+      main_menu_button Combined
     ]
