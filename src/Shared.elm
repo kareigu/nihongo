@@ -1,12 +1,7 @@
 module Shared exposing (..)
 
 type Msg
-  = UpdateCounter CounterMsg
-  | ChangePage Pages
-
-type CounterMsg
-  = Increment
-  | Decrement
+  = ChangePage Pages
 
 type Pages
   = Menu

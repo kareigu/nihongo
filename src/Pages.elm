@@ -2,9 +2,8 @@ module Pages exposing (katakana, hiragana, kanji, numbers, combined)
 
 import Html exposing (h1, div, text)
 import Html.Attributes exposing (class)
-import Html.Events exposing (onClick)
 
-import Shared exposing (Msg(..), CounterMsg(..), Model)
+import Shared exposing (Msg(..), Model)
 
 
 katakana : Model -> Html.Html Msg

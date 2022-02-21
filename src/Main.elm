@@ -4,9 +4,7 @@ import Browser
 import Html exposing (button, div, h1, text, span, p)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
-import Dict exposing (Dict)
 
-import Counter exposing (counter, update_counter)
 import Shared exposing (Msg(..), Pages(..), Model)
 import Pages
 
@@ -21,8 +19,6 @@ main =
     }
 
 
-
-
 init : Model
 init =
   {
@@ -31,13 +27,9 @@ init =
   }
 
 
-
-
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    UpdateCounter c -> 
-      { model | count = update_counter c model.count }
     ChangePage p ->
       { model | selectedPage = p }
 
