@@ -1,6 +1,11 @@
 module Shared exposing (..)
 import Array exposing (Array)
 
+version : String
+version =
+  "v" ++
+  "0.5.0"
+
 type Msg
   = NoOp
   | ChangePage Pages

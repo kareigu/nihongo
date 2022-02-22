@@ -1,14 +1,14 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (button, div, h1, text, p)
+import Html exposing (button, div, h1, text, p, span)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 
 import Shared exposing (Msg(..), Pages(..), Model, Guess(..))
 import Pages
 import MsgHandler
-import Shared exposing (default_model)
+import Shared exposing (default_model, version)
 
 
 main : Program () Model Msg
@@ -66,6 +66,7 @@ view model =
         [ text "NIHONGO - 日本語" ],
       div [ class "flex flex-col mt-2 mb-2 h-full" ] 
         [ 
+          span [ class "absolute top-1" ] [ text version ],
           app_view model
         ]
     ]
