@@ -95,7 +95,8 @@ move_button btn_text off msg =
   [ 
     class """bg-platinum text-auburn
       text-3xl flex justify-center 
-      items-center px-3 pt-1 pb-2 rounded-sm
+      w-14 h-14
+      items-center rounded-sm
       drop-shadow-md
       hover:outline hover:outline-mountbatten-pink 
       hover:text-raisin-black hover:outline-4
