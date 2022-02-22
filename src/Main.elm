@@ -5,11 +5,10 @@ import Html exposing (button, div, h1, text, span, p)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 
-import Shared exposing (Msg(..), Pages(..), Model, Glyph, GlyphList, CurrentChoice, Guess(..))
+import Shared exposing (Msg(..), Pages(..), Model, Guess(..))
 import Pages
-import Random
-import Array exposing (Array)
-import Glyphs
+import MsgHandler
+import Array
 
 
 main : Program () Model Msg
@@ -38,7 +37,7 @@ init _ =
   )
 
 subscriptions : Model -> Sub Msg
-subscriptions model =
+subscriptions _ =
   Sub.none
 
 
@@ -46,25 +45,22 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     ChangePage page ->
-      msg_change_page page model
+      MsgHandler.change_page page model
 
     Reroll ->
-      msg_reroll model
+      MsgHandler.reroll model
 
     RollChoices correct ->
-      msg_roll_choices correct model
+      MsgHandler.roll_choices correct model
 
     UpdateChoices (rolls, correct) ->
-      msg_update_choices (rolls, correct) model
+      MsgHandler.update_choices (rolls, correct) model
 
     MakeGuess guess ->
-      msg_make_guess guess model
+      MsgHandler.make_guess guess model
 
     NoOp ->
-      (
-        model,
-        Cmd.none
-      )
+      ( model, Cmd.none )
 
 
 view : Model -> Html.Html Msg
@@ -84,130 +80,6 @@ view model =
             button [ class "btn mx-4 mt-auto mb-10", onClick (ChangePage Menu) ] [ text "✕" ]
         ]
     ]
-    
-
-msg_change_page :  Pages -> Model -> (Model, Cmd Msg)
-msg_change_page page model =
-  (
-    { model | 
-      selectedPage = page,
-      choice_data = { 
-        current = Nothing,
-        bank = page_to_bank page,
-        guess = NotGuessed
-      }
-    }, 
-    if page == Menu then
-      Cmd.none
-    else
-      Random.generate RollChoices (Random.int 0 3)
-  )
-
-msg_reroll : Model -> (Model, Cmd Msg)
-msg_reroll model =
-  (
-    model,
-    Random.generate RollChoices (Random.int 0 3)
-  )
-
-msg_roll_choices : Int -> Model -> (Model, Cmd Msg)
-msg_roll_choices correct model =
-  let
-    max_index = 
-      (Array.length model.choice_data.bank - 1)
-
-  in
-  (
-    model,
-    Random.generate UpdateChoices (Random.pair (Random.list 4 (Random.int 0 max_index)) (Random.constant correct))
-  )
-
-msg_update_choices : (List Int, Int) -> Model -> (Model, Cmd Msg)
-msg_update_choices (rolls, correct) model =
-  (
-    { model |
-      choice_data = {
-        bank = model.choice_data.bank,
-        guess = NotGuessed,
-        current = Just
-          {
-            correct = (get_correct correct rolls model.choice_data.bank),
-            choices = (rolls_to_choices rolls [] model.choice_data.bank)
-          }
-      }
-    },
-    Cmd.none
-  )
-
-msg_make_guess : Glyph -> Model -> (Model, Cmd Msg)
-msg_make_guess guess model =
-  let
-    (selected_choice, correct) = (case model.choice_data.current of
-      Just x ->
-        (
-          (Maybe.withDefault ("E", "Error") 
-            (List.head 
-              (List.filter (check_guess guess) x.choices)
-            )
-          ), 
-        x.correct)
-
-      Nothing ->
-        (("E", "Error"), ("E", "Error")))
-  in
-  (
-    { model |
-      choice_data = {
-        bank = model.choice_data.bank,
-        current = model.choice_data.current,
-        guess = (if selected_choice == correct then Correct else Wrong)
-      }
-    },
-    Cmd.none
-  )
-
-check_guess : Glyph -> Glyph -> Bool
-check_guess x guess =
-  x == guess
-
-page_to_bank : Pages -> GlyphList
-page_to_bank page =
-  case page of
-    Hiragana -> Glyphs.hiragana
-    Katakana -> Glyphs.katakana
-    Kanji -> Glyphs.kanji
-    Numbers -> Glyphs.numbers
-    Combined -> Glyphs.combined
-    _ -> Array.fromList []
-
-rolls_to_choices : (List Int) -> (List Glyph) -> GlyphList -> (List Glyph)
-rolls_to_choices rolls choices glyphs =
-  if List.isEmpty rolls then
-    choices
-  else
-    rolls_to_choices 
-      (List.drop 1 rolls) 
-      (
-        case rolls of
-          [] ->
-            choices
-          head :: rem ->
-            choices ++ [(get_glyph_at_index head glyphs)]
-      )
-      glyphs
-
-get_correct : Int -> List Int -> GlyphList -> Glyph
-get_correct correct rolls glyphs =
-  case (Array.get correct (Array.fromList rolls)) of
-    Just i ->
-      get_glyph_at_index i glyphs
-    Nothing ->
-      ("E", "Error")
-
-get_glyph_at_index : Int -> GlyphList -> Glyph
-get_glyph_at_index index glyphs =
-  Maybe.withDefault ("E", "Error") (Array.get index glyphs)
-
 
 
 app_view : Model -> Html.Html Msg
