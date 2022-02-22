@@ -7,6 +7,7 @@ type Msg
   | UpdateChoices (List Int, Int) 
   | RollChoices Int
   | MakeGuess Glyph
+  | Reroll
 
 type Pages
   = Menu

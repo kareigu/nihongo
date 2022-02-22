@@ -1,6 +1,6 @@
 module Pages exposing (katakana, hiragana, kanji, numbers, combined)
 
-import Html exposing (h1, div, text, button)
+import Html exposing (h1, div, text, button, span)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 
@@ -62,7 +62,25 @@ picking_view model =
           div [ class "flex flex-col items-center" ]
             [
               glyph_showcase model (Tuple.first x.correct),
-              choices_container model x.choices
+              choices_container model x.choices,
+              ( if model.choice_data.guess == NotGuessed then
+                  (span [] [])
+                else
+                  (
+                    button [ 
+                        class """bg-platinum text-auburn
+                          mt-10 text-3xl flex justify-center 
+                          items-center px-3 pt-1 pb-2 rounded-sm
+                          hover:outline hover:outline-mountbatten-pink 
+                          hover:text-raisin-black hover:outline-4
+                          active:outline active:outline-mountbatten-pink 
+                          active:text-raisin-black active:outline-4
+                          active:outline-offset-2""", 
+                        onClick Reroll 
+                        ] 
+                      [ text "⫸" ]
+                  )
+              )
             ]
     ]
 

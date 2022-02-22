@@ -61,6 +61,13 @@ update msg model =
           Random.generate RollChoices (Random.int 0 3)
       )
 
+
+    Reroll ->
+      (
+        model,
+        Random.generate RollChoices (Random.int 0 3)
+      )
+
     RollChoices correct ->
       let
         max_index = 
