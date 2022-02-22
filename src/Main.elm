@@ -174,7 +174,7 @@ get_glyph_at_index index glyphs =
 
 view : Model -> Html.Html Msg
 view model =
-  div [ class "flex flex-col h-screen m-4 overflow-x-hidden" ]
+  div [ class "flex flex-col h-[95vh] m-4 overflow-x-hidden" ]
     [ h1 [ class """text-center font-bold mt-3 text-4xl py-2 select-none 
                   text-auburn bg-platinum border-4 border-x-auburn 
                   border-t-platinum border-b-raisin-black
@@ -186,7 +186,7 @@ view model =
           if model.selectedPage == Menu then 
             span [ class "w-0 h-0" ] []
           else
-            button [ class "btn mx-4 mt-auto mb-10", onClick (ChangePage Menu) ] [ text "Menu" ]
+            button [ class "btn mx-4 mt-auto mb-10", onClick (ChangePage Menu) ] [ text "✕" ]
         ]
     ]
 
