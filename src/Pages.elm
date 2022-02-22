@@ -4,7 +4,7 @@ import Html exposing (h1, div, text, button, span)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 
-import Shared exposing (Msg(..), Model, Glyph, Guess(..))
+import Shared exposing (Msg(..), Model, Glyph, Guess(..), Choices)
 
 
 katakana : Model -> Html.Html Msg
@@ -100,7 +100,7 @@ glyph_showcase model glyph =
       [ text glyph ] 
     ]
 
-choices_container : Model -> List Glyph -> Html.Html Msg
+choices_container : Model -> Choices -> Html.Html Msg
 choices_container model choices =
   div [ class "flex flex-row" ]
     (List.map (make_choice_button model) choices)

@@ -1,6 +1,6 @@
 module MsgHandler exposing (..)
 
-import Shared exposing (Msg(..), Pages(..), Model, Glyph, GlyphList, Guess(..))
+import Shared exposing (Msg(..), Pages(..), Model, Glyph, GlyphList, Guess(..), Choices, Rolls, CorrectGlyph)
 import Random
 import Glyphs
 import Array
@@ -30,7 +30,7 @@ reroll model =
     Random.generate RollChoices (Random.int 0 3)
   )
 
-roll_choices : Int -> Model -> (Model, Cmd Msg)
+roll_choices : CorrectGlyph -> Model -> (Model, Cmd Msg)
 roll_choices correct model =
   let
     max_index = 
@@ -39,10 +39,16 @@ roll_choices correct model =
   in
   (
     model,
-    Random.generate UpdateChoices (Random.pair (Random.list 4 (Random.int 0 max_index)) (Random.constant correct))
+    Random.generate 
+      UpdateChoices 
+        (
+          Random.pair 
+            (Random.list 4 (Random.int 0 max_index)) 
+            (Random.constant correct)
+        )
   )
 
-update_choices : (List Int, Int) -> Model -> (Model, Cmd Msg)
+update_choices : (Rolls, CorrectGlyph) -> Model -> (Model, Cmd Msg)
 update_choices (rolls, correct) model =
   (
     { model |
@@ -111,7 +117,7 @@ page_to_bank page =
     Combined -> Glyphs.combined
     _ -> Array.fromList []
 
-rolls_to_choices : (List Int) -> (List Glyph) -> GlyphList -> (List Glyph)
+rolls_to_choices : (Rolls) -> (Choices) -> GlyphList -> (Choices)
 rolls_to_choices rolls choices glyphs =
   if List.isEmpty rolls then
     choices

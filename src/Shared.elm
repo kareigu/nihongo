@@ -54,8 +54,12 @@ default_choicedata =
 type alias CurrentChoice =
   {
     correct : Glyph,
-    choices : List Glyph
+    choices : Choices
   }
+
+type alias Choices = List Glyph
+type alias Rolls = List Int
+type alias CorrectGlyph = Int
 
 type alias Glyph = (String, String)
 default_glyph : Glyph

@@ -100,12 +100,12 @@ main_menu_items =
 main_menu_button : Pages -> Html.Html Msg
 main_menu_button page =
   button [ 
-    class """group bg-platinum text-auburn w-32 h-32 m-4 
-          outline outline-4 outline-cherry-pink rounded-sm drop-shadow-md 
-          hover:outline-auburn hover:outline-offset-0 hover:text-raisin-black hover:drop-shadow-xl
-          active:outline-auburn active:outline-offset-2 active:text-raisin-black active:drop-shadow-2xl
-          transition-all duration-75""", 
-    onClick (ChangePage page) 
+      class """group bg-platinum text-auburn w-32 h-32 m-4 
+            outline outline-4 outline-cherry-pink rounded-sm drop-shadow-md 
+            hover:outline-auburn hover:outline-offset-0 hover:text-raisin-black hover:drop-shadow-xl
+            active:outline-auburn active:outline-offset-2 active:text-raisin-black active:drop-shadow-2xl
+            transition-all duration-75""", 
+      onClick (ChangePage page) 
     ] 
     [ 
       let (r, j) = button_inner page
