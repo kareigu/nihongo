@@ -58,15 +58,17 @@ update msg model =
 
 view : Model -> Html.Html Msg
 view model =
-  div [ class "flex flex-col h-[95vh] m-4 overflow-x-hidden" ]
+  div [ class "flex flex-col h-[95vh] sm:items-center m-4 overflow-x-hidden" ]
     [ h1 [ class """text-center font-bold mt-3 text-4xl py-2 select-none 
                   text-auburn bg-platinum border-4 border-x-auburn 
-                  border-t-platinum border-b-raisin-black
-                  rounded font-PT-Sans""" ] 
-        [ text "NIHONGO - 日本語" ],
+                  border-t-platinum border-b-raisin-black relative
+                  rounded font-PT-Sans sm:w-[36rem]""" ] 
+        [ 
+          span [ class "absolute text-raisin-black text-sm top-0 left-1" ] [ text version ],
+          text "NIHONGO - 日本語" 
+        ],
       div [ class "flex flex-col mt-2 mb-2 h-full" ] 
         [ 
-          span [ class "absolute top-1" ] [ text version ],
           app_view model
         ]
     ]

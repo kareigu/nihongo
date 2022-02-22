@@ -4,7 +4,7 @@ import Array exposing (Array)
 version : String
 version =
   "v" ++
-  "0.5.5"
+  "0.5.6"
 
 type Msg
   = NoOp
