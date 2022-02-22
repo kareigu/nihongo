@@ -49,6 +49,14 @@ combined model =
 
 picking_view : Model -> Html.Html Msg
 picking_view model =
+  let
+    use_large_buttons =
+      case model.selectedPage of
+          Kanji -> True
+          Numbers -> True
+          _ -> False
+
+  in
   div []
     [
       case model.choice_data.current of
@@ -62,7 +70,7 @@ picking_view model =
           div [ class "flex flex-col items-center" ]
             [
               glyph_showcase model (Tuple.first x.correct),
-              choices_container model x.choices,
+              choices_container model use_large_buttons x.choices,
               div 
                 [ 
                   class """flex justify-center items-center mt-10 gap-8
@@ -118,19 +126,43 @@ glyph_showcase model glyph =
       [ text glyph ] 
     ]
 
-choices_container : Model -> Choices -> Html.Html Msg
-choices_container model choices =
-  div [ class "flex flex-row" ]
-    (List.map (make_choice_button model) choices)
+choices_container : Model -> Bool -> Choices -> Html.Html Msg
+choices_container model large choices =
+  div 
+    [ 
+      class 
+        ("w-screen sm:w-full " 
+          ++ if large then 
+              "grid grid-cols-2 justify-items-center" 
+            else 
+              "flex flex-row justify-center") 
+    ]
+    (List.map (make_choice_button model large) choices)
 
-make_choice_button : Model -> Glyph -> Html.Html Msg
-make_choice_button model glyph =
-  choice_button glyph model
+make_choice_button : Model -> Bool -> Glyph -> Html.Html Msg
+make_choice_button model large glyph =
+  choice_button glyph large model
 
-choice_button : Glyph -> Model -> Html.Html Msg
-choice_button choice model =
+choice_button : Glyph -> Bool -> Model -> Html.Html Msg
+choice_button choice large model =
+  let
+    btn_text =
+      Tuple.second choice
+
+    text_size =
+      if String.length btn_text > 8 then
+        "text-lg"
+      else
+        "text-2xl"
+
+  in
   div [ 
-      class "text-center bg-platinum text-auburn w-14 h-14 m-4 rounded-sm drop-shadow-md",
+      class 
+        (
+          "text-center bg-platinum text-auburn h-14 m-4 rounded-sm drop-shadow-md "
+          ++
+          if large then "w-28" else "w-14"
+        ),
       onClick (
         if model.choice_data.guess == NotGuessed then
           MakeGuess choice
@@ -138,6 +170,13 @@ choice_button choice model =
           NoOp
         ) 
     ]
-    [ button [ class "select-none font-PT-Sans h-full w-full flex justify-center items-center text-2xl" ] 
-      [ text (Tuple.second choice) ] 
+    [ button 
+      [ 
+        class (
+          "select-none font-PT-Sans h-full w-full flex justify-center items-center " 
+          ++
+          text_size
+        )
+      ] 
+      [ text btn_text ] 
     ]
