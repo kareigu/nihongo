@@ -4,6 +4,7 @@ import Shared exposing (Msg(..), Pages(..), Model, Glyph, GlyphList, Guess(..))
 import Random
 import Glyphs
 import Array
+import Shared exposing (default_glyph, unwrap_glyph)
 
 change_page :  Pages -> Model -> (Model, Cmd Msg)
 change_page page model =
@@ -61,18 +62,26 @@ update_choices (rolls, correct) model =
 make_guess : Glyph -> Model -> (Model, Cmd Msg)
 make_guess guess model =
   let
-    (selected_choice, correct) = (case model.choice_data.current of
-      Just x ->
-        (
-          (Maybe.withDefault ("E", "Error") 
-            (List.head 
-              (List.filter (check_guess guess) x.choices)
+    (selected_choice, correct) = 
+      (
+        case model.choice_data.current of
+          Just x ->
+            (
+              (
+                unwrap_glyph 
+                (
+                  List.head 
+                    (
+                      List.filter (check_guess guess) x.choices
+                    )
+                )
+              ), 
+              x.correct
             )
-          ), 
-        x.correct)
 
-      Nothing ->
-        (("E", "Error"), ("E", "Error")))
+          Nothing ->
+            (default_glyph, default_glyph)
+      )
   in
   (
     { model |
@@ -124,8 +133,8 @@ get_correct correct rolls glyphs =
     Just i ->
       get_glyph_at_index i glyphs
     Nothing ->
-      ("E", "Error")
+      default_glyph
 
 get_glyph_at_index : Int -> GlyphList -> Glyph
 get_glyph_at_index index glyphs =
-  Maybe.withDefault ("E", "Error") (Array.get index glyphs)
+  unwrap_glyph (Array.get index glyphs)

@@ -29,11 +29,26 @@ type alias Model =
     selectedPage : Pages
   }
 
+default_model : Model
+default_model =
+  {
+    choice_data = default_choicedata,
+    selectedPage = Menu
+  }
+
 type alias ChoiceData =
   {
     current : Maybe CurrentChoice,
     guess : Guess,
     bank : GlyphList
+  }
+
+default_choicedata : ChoiceData
+default_choicedata =
+  {
+    current = Nothing,
+    bank = (Array.fromList []),
+    guess = NotGuessed
   }
 
 type alias CurrentChoice =
@@ -43,4 +58,11 @@ type alias CurrentChoice =
   }
 
 type alias Glyph = (String, String)
+default_glyph : Glyph
+default_glyph = ("E", "error")
+
+unwrap_glyph : Maybe Glyph -> Glyph
+unwrap_glyph to_unwrap =
+  Maybe.withDefault default_glyph to_unwrap
+
 type alias GlyphList = Array Glyph

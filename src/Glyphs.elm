@@ -1,6 +1,6 @@
 module Glyphs exposing (..)
 import Shared exposing (GlyphList)
-import Array exposing (Array)
+import Array
 
 combined : GlyphList
 combined =

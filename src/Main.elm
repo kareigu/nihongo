@@ -8,7 +8,7 @@ import Html.Events exposing (onClick)
 import Shared exposing (Msg(..), Pages(..), Model, Guess(..))
 import Pages
 import MsgHandler
-import Array
+import Shared exposing (default_model)
 
 
 main : Program () Model Msg
@@ -25,14 +25,7 @@ main =
 init : () -> (Model, Cmd Msg)
 init _ =
   (
-    {
-    choice_data = {
-      current = Nothing,
-      bank = (Array.fromList []),
-      guess = NotGuessed
-    },
-    selectedPage = Menu
-    },
+    default_model,
     Cmd.none
   )
 
