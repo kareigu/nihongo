@@ -11,6 +11,8 @@
     "compile": "run-p compile:elm compile:css",
     "dev": "run-p watch serve",
     "build": "elm make src/Main.elm --output=public/assets/js/elm.js --optimize",
+    "compress": "uglifyjs public/assets/js/elm.js --compress 'pure_funcs=[F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9],pure_getters,keep_fargs=false,unsafe_comps,unsafe' | uglifyjs --mangle --output public/assets/js/elm.js",
+    "build:dist": "build && compress",
     "serve": "serve public",
     "watch:elm": "watch 'yarn run compile:elm' src",
     "watch:css": "watch 'yarn run compile:css' src",
@@ -27,6 +29,7 @@
     "postcss": "^8.2.9",
     "postcss-cli": "9",
     "tailwindcss": "3",
+    "uglify-js": "^3.15.1",
     "watch": "^1.0.2"
   }
 }
