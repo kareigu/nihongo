@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (button, div, h1, text, span, p)
+import Html exposing (button, div, h1, text, p)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 
@@ -66,11 +66,7 @@ view model =
         [ text "NIHONGO - 日本語" ],
       div [ class "flex flex-col mt-2 mb-2 h-full" ] 
         [ 
-          app_view model,
-          if model.selectedPage == Menu then 
-            span [ class "w-0 h-0" ] []
-          else
-            button [ class "btn mx-4 mt-auto mb-10", onClick (ChangePage Menu) ] [ text "✕" ]
+          app_view model
         ]
     ]
 

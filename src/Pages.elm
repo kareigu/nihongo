@@ -1,10 +1,10 @@
 module Pages exposing (katakana, hiragana, kanji, numbers, combined)
 
-import Html exposing (h1, div, text, button, span)
-import Html.Attributes exposing (class)
+import Html exposing (h1, div, text, button)
+import Html.Attributes exposing (class, disabled)
 import Html.Events exposing (onClick)
 
-import Shared exposing (Msg(..), Model, Glyph, Guess(..), Choices)
+import Shared exposing (Msg(..), Model, Glyph, Guess(..), Choices, Pages(..))
 
 
 katakana : Model -> Html.Html Msg
@@ -63,26 +63,44 @@ picking_view model =
             [
               glyph_showcase model (Tuple.first x.correct),
               choices_container model x.choices,
-              ( if model.choice_data.guess == NotGuessed then
-                  (span [] [])
-                else
-                  (
-                    button [ 
-                        class """bg-platinum text-auburn
-                          mt-10 text-3xl flex justify-center 
-                          items-center px-3 pt-1 pb-2 rounded-sm
-                          hover:outline hover:outline-mountbatten-pink 
-                          hover:text-raisin-black hover:outline-4
-                          active:outline active:outline-mountbatten-pink 
-                          active:text-raisin-black active:outline-4
-                          active:outline-offset-2""", 
-                        onClick Reroll 
-                        ] 
-                      [ text "⫸" ]
-                  )
-              )
+              div 
+                [ 
+                  class """flex justify-center items-center mt-10 gap-8
+                    w-[95%] p-4 bg-mountbatten-pink rounded-sm""" 
+                ]
+                [
+                  move_button "✕" False (ChangePage Menu),
+                  next_button model
+                ]
             ]
     ]
+
+next_button : Model -> Html.Html Msg
+next_button model =
+  ( 
+    ( move_button "⫸" (model.choice_data.guess == NotGuessed) Reroll )
+  )
+
+move_button : String -> Bool -> Msg -> Html.Html Msg
+move_button btn_text off msg =
+  button 
+  [ 
+    class """bg-platinum text-auburn
+      text-3xl flex justify-center 
+      items-center px-3 pt-1 pb-2 rounded-sm
+      drop-shadow-md
+      hover:outline hover:outline-mountbatten-pink 
+      hover:text-raisin-black hover:outline-4
+      hover:drop-shadow-lg
+      active:outline active:outline-mountbatten-pink 
+      active:text-raisin-black active:outline-4
+      active:outline-offset-2 active:drop-shadow-xl
+      disabled:grayscale
+      transition-all""", 
+    onClick msg,
+    disabled off
+  ] 
+  [ text btn_text ]
 
 glyph_showcase : Model -> String -> Html.Html Msg
 glyph_showcase model glyph =
