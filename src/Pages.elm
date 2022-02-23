@@ -75,7 +75,7 @@ picking_view model =
               div 
                 [ 
                   class """flex justify-center items-center mt-10 gap-8
-                    w-[95%] p-4 bg-mountbatten-pink rounded-sm""" 
+                    w-[95%] p-4 bg-mountbatten-pink rounded-sm animate-drop""" 
                 ]
                 [
                   move_button "✕" Standard (ChangePage Menu),
@@ -119,7 +119,7 @@ move_button btn_text disable_props msg =
       (
         """
         text-3xl flex justify-center 
-        w-14 h-14
+        w-14 h-14 animate-drop-slow
         items-center rounded-sm
         drop-shadow-md
         hover:outline hover:outline-mountbatten-pink 
@@ -142,7 +142,7 @@ glyph_showcase model glyph =
   let
     colours = (case model.choice_data.guess of 
       NotGuessed ->
-        "text-auburn bg-platinum"
+        "text-auburn bg-platinum animate-drop"
       Correct ->
         "text-platinum bg-correct animate-hop"
       Wrong ->
@@ -158,7 +158,7 @@ choices_container model large choices =
   div 
     [ 
       class 
-        ("w-screen sm:w-full " 
+        ("w-screen sm:w-full animate-slide-in-right " 
           ++ if large then 
               "grid grid-cols-2 justify-items-center" 
             else 

@@ -61,7 +61,7 @@ view model =
   div [ class "flex flex-col h-[95vh] sm:items-center m-4 overflow-x-hidden" ]
     [ div 
         [ 
-          class """rounded
+          class """rounded animate-drop-slowest
             mt-3 bg-flag-pattern bg-space 
             bg-center bg-[length:200px_100px]""" 
         ] 
@@ -109,12 +109,26 @@ main_menu_items =
 
 main_menu_button : Pages -> Html.Html Msg
 main_menu_button page =
+  let
+    animation =
+      case page of
+        Kanji -> "animate-drop-slow"
+        Numbers -> "animate-drop-slow"
+        Combined -> "animate-drop-slowest"
+        _ -> "animate-drop"
+
+  in
   button [ 
-      class """group bg-platinum text-auburn w-32 h-32 m-4 
-            outline outline-4 outline-cherry-pink rounded-sm drop-shadow-md 
-            hover:outline-auburn hover:outline-offset-0 hover:text-raisin-black hover:drop-shadow-xl
-            active:outline-auburn active:outline-offset-2 active:text-raisin-black active:drop-shadow-2xl
-            transition-all duration-75""", 
+      class 
+        (
+          """group bg-platinum text-auburn w-32 h-32 m-4
+          outline outline-4 outline-cherry-pink rounded-sm drop-shadow-md 
+          hover:outline-auburn hover:outline-offset-0 hover:text-raisin-black hover:drop-shadow-xl
+          active:outline-auburn active:outline-offset-2 active:text-raisin-black active:drop-shadow-2xl
+          transition-all duration-75 """
+          ++
+          animation
+        ), 
       onClick (ChangePage page) 
     ] 
     [ 

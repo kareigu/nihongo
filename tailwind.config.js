@@ -27,6 +27,10 @@ module.exports = {
         'hop': 'hop 750ms ease-in-out',
         'wiggle': 'wiggle 750ms ease-in-out',
         'zoom': 'zoom 650ms ease-in-out',
+        'drop': 'drop 250ms ease-in',
+        'drop-slow': 'drop 350ms ease-in',
+        'drop-slowest': 'drop 450ms ease-in',
+        'slide-in-right': 'slide-in-right 350ms ease-in-out',
       },
       keyframes: {
         hop: {
@@ -41,6 +45,38 @@ module.exports = {
         zoom: {
           '0%, 100%': { transform: 'scale(100%)' },
           '50%': { transform: 'scale(110%)' },
+        },
+        drop: {
+          '0%': { 
+            transform: 'translateY(-25%)',
+            opacity: '0',
+          },
+          '50%': { 
+            transform: 'translateY(-12.5%)',
+            opacity: '1',
+          },
+          '100%': { 
+            transform: 'translateY(0)',
+            opacity: '1',
+          },
+        },
+        'slide-in-right': {
+          '0%': { 
+            transform: 'translateX(-25%)',
+            opacity: '0',
+          },
+          '50%': { 
+            transform: 'translateX(-15%)',
+            opacity: '1',
+          },
+          '70%': { 
+            transform: 'translateX(5%)',
+            opacity: '1',
+          },
+          '100%': { 
+            transform: 'translateX(0)',
+            opacity: '1',
+          }
         }
       }
     },
