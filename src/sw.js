@@ -11,7 +11,8 @@ const CACHE_URLS = [
   '/apple-touch-icon.png',
   '/favicon-32x32.png',
   '/favicon-16x16.png',
-  '/flag.svg'
+  '/flag.svg',
+  '/bg_banner.webp'
 ];
 
 self.addEventListener('install', event => {

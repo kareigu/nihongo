@@ -58,18 +58,18 @@ update msg model =
 
 view : Model -> Html.Html Msg
 view model =
-  div [ class "flex flex-col h-[95vh] sm:items-center m-4 overflow-x-hidden" ]
+  div [ class "flex flex-col h-screen sm:items-center m-4 overflow-x-hidden" ]
     [ div 
         [ 
           class """rounded animate-drop-slowest
-            mt-3 bg-flag-pattern bg-space 
-            bg-center bg-[length:200px_100px]""" 
+            mt-3 bg-wave-pattern bg-space 
+            bg-center bg-contain""" 
         ] 
       [
         h1 [ class """text-center font-bold text-4xl select-none 
                   text-auburn underline decoration-dashed
                   py-2 decoration-4 underline-offset-4
-                  bg-platinum bg-opacity-75
+                  bg-platinum bg-opacity-50
                   border-4 border-x-auburn 
                   border-t-platinum border-b-raisin-black relative
                   rounded font-PT-Sans sm:w-[36rem]""" ] 

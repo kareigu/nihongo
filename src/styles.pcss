@@ -4,8 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .wavy-bg {
+    background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #252222 4px ), repeating-linear-gradient( #1E1B1B, #232020 );
+  }
+}
+
 body {
-  @apply bg-raisin-black text-platinum overflow-hidden
+  @apply wavy-bg bg-cover text-platinum overflow-hidden
 }
 
 .btn {

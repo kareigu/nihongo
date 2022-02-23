@@ -1,7 +1,8 @@
 module.exports = {
   mode: 'jit',
   content: [
-    './src/**/*.elm'
+    './src/**/*.elm',
+    './public/index.html'
   ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
@@ -21,7 +22,8 @@ module.exports = {
         wrong: '#a1282b'
       },
       backgroundImage: {
-        'flag-pattern': "url('/flag.svg')"
+        'wave-pattern': "url('/bg_banner.webp')",
+        "flag-pattern": "url('/flag.svg')"
       },
       animation: {
         'hop': 'hop 750ms ease-in-out',
