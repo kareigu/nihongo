@@ -78,7 +78,7 @@ picking_view model =
                     w-[95%] p-4 bg-mountbatten-pink rounded-sm""" 
                 ]
                 [
-                  move_button "✕" False (ChangePage Menu),
+                  move_button "✕" Standard (ChangePage Menu),
                   next_button model
                 ]
             ]
@@ -87,43 +87,68 @@ picking_view model =
 next_button : Model -> Html.Html Msg
 next_button model =
   ( 
-    ( move_button "⫸" (model.choice_data.guess == NotGuessed) Reroll )
+    ( move_button "⫸" (NextButton model) Reroll )
   )
 
-move_button : String -> Bool -> Msg -> Html.Html Msg
-move_button btn_text off msg =
+
+type MoveButtonDisableProps 
+  = Standard
+  | NextButton Model
+
+move_button : String -> MoveButtonDisableProps -> Msg -> Html.Html Msg
+move_button btn_text disable_props msg =
+  let
+    (disable_button, styles) =
+      case disable_props of
+        Standard ->
+          (False, "bg-platinum text-auburn")
+        NextButton model ->
+          (
+            model.choice_data.guess == NotGuessed, 
+            if model.choice_data.guess == NotGuessed then 
+              "bg-wrong text-platinum"
+            else
+              "bg-correct text-platinum animate-zoom"
+          )
+
+
+  in
   button 
   [ 
-    class """bg-platinum text-auburn
-      text-3xl flex justify-center 
-      w-14 h-14
-      items-center rounded-sm
-      drop-shadow-md
-      hover:outline hover:outline-mountbatten-pink 
-      hover:text-raisin-black hover:outline-4
-      hover:drop-shadow-lg
-      active:outline active:outline-mountbatten-pink 
-      active:text-raisin-black active:outline-4
-      active:outline-offset-2 active:drop-shadow-xl
-      disabled:grayscale
-      transition-all""", 
+    class 
+      (
+        """
+        text-3xl flex justify-center 
+        w-14 h-14
+        items-center rounded-sm
+        drop-shadow-md
+        hover:outline hover:outline-mountbatten-pink 
+        hover:text-raisin-black hover:outline-4
+        hover:drop-shadow-lg
+        active:outline active:outline-mountbatten-pink 
+        active:text-raisin-black active:outline-4
+        active:outline-offset-2 active:drop-shadow-xl
+        transition-all """
+        ++
+        styles
+      ), 
     onClick msg,
-    disabled off
+    disabled disable_button
   ] 
   [ text btn_text ]
 
 glyph_showcase : Model -> String -> Html.Html Msg
 glyph_showcase model glyph =
   let
-    bg_colour = (case model.choice_data.guess of 
+    colours = (case model.choice_data.guess of 
       NotGuessed ->
-        "bg-platinum"
+        "text-auburn bg-platinum"
       Correct ->
-        "bg-green-500"
+        "text-platinum bg-correct animate-hop"
       Wrong ->
-        "bg-red-500")
+        "text-platinum bg-wrong animate-wiggle")
   in
-  div [ class ("text-center text-auburn w-28 h-28 m-4 rounded-sm drop-shadow-md " ++ bg_colour) ]
+  div [ class ("text-center w-28 h-28 m-4 rounded-sm drop-shadow-md " ++ colours) ]
     [ h1 [ class "select-none font-Kosugi h-full w-full flex justify-center items-center text-5xl" ] 
       [ text glyph ] 
     ]
@@ -157,6 +182,9 @@ choice_button choice large model =
       else
         "text-2xl"
 
+    off = not (model.choice_data.guess == NotGuessed)
+
+
   in
   div [ 
       class 
@@ -172,7 +200,6 @@ choice_button choice large model =
             active:outline active:outline-mountbatten-pink 
             active:text-raisin-black active:outline-4
             active:outline-offset-2 active:drop-shadow-xl
-            disabled:grayscale
             transition-all """
           ++
           if large then "w-28" else "w-14"
@@ -182,15 +209,16 @@ choice_button choice large model =
           MakeGuess choice
         else
           NoOp
-        ) 
+        )
     ]
     [ button 
       [ 
         class (
-          "select-none font-PT-Sans h-full w-full flex justify-center items-center " 
+          "select-none font-PT-Sans h-full disabled:grayscale w-full flex justify-center items-center " 
           ++
           text_size
-        )
+        ),
+        disabled off
       ] 
       [ text btn_text ] 
     ]
