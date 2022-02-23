@@ -31,6 +31,7 @@ module.exports = {
         'drop-slow': 'drop 350ms ease-in',
         'drop-slowest': 'drop 450ms ease-in',
         'slide-in-right': 'slide-in-right 350ms ease-in-out',
+        'flip': 'flip 250ms ease-in-out',
       },
       keyframes: {
         hop: {
@@ -75,6 +76,20 @@ module.exports = {
           },
           '100%': { 
             transform: 'translateX(0)',
+            opacity: '1',
+          }
+        },
+        flip: {
+          '0%': { 
+            transform: 'rotateY(0deg) scale(100%)',
+            opacity: '0',
+          },
+          '50%': { 
+            transform: 'rotateY(180deg) scale(120%)',
+            opacity: '1',
+          },
+          '100%': { 
+            transform: 'rotateY(360deg) scale(100%)',
             opacity: '1',
           }
         }

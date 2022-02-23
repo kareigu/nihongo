@@ -202,7 +202,9 @@ choice_button choice large model =
             active:outline-offset-2 active:drop-shadow-xl
             transition-all """
           ++
-          if large then "w-28" else "w-14"
+          if large then "w-28 " else "w-14 "
+          ++
+          if off then "" else "animate-flip"
         ),
       onClick (
         if model.choice_data.guess == NotGuessed then
