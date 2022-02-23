@@ -54,6 +54,7 @@ picking_view model =
       case model.selectedPage of
           Kanji -> True
           Numbers -> True
+          Combined -> True
           _ -> False
 
   in
@@ -160,7 +161,19 @@ choice_button choice large model =
   div [ 
       class 
         (
-          "text-center bg-platinum text-auburn h-14 m-4 rounded-sm drop-shadow-md "
+          """bg-platinum text-auburn
+            text-3xl text-center 
+            h-14 m-4
+            items-center rounded-sm
+            drop-shadow-md
+            hover:outline hover:outline-mountbatten-pink 
+            hover:text-raisin-black hover:outline-4
+            hover:drop-shadow-lg
+            active:outline active:outline-mountbatten-pink 
+            active:text-raisin-black active:outline-4
+            active:outline-offset-2 active:drop-shadow-xl
+            disabled:grayscale
+            transition-all """
           ++
           if large then "w-28" else "w-14"
         ),
