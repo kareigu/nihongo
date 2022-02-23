@@ -10,7 +10,8 @@ const CACHE_URLS = [
   '/android-chrome-192x192.png',
   '/apple-touch-icon.png',
   '/favicon-32x32.png',
-  'favicon-16x16.png'
+  '/favicon-16x16.png',
+  '/flag.svg'
 ];
 
 self.addEventListener('install', event => {

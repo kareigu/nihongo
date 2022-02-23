@@ -17,6 +17,9 @@ module.exports = {
         'raisin-black': '#232020',
         'mountbatten-pink': '#9C7A97',
         'cherry-pink': '#FFB7C5'
+      },
+      backgroundImage: {
+        'flag-pattern': "url('/flag.svg')"
       }
     },
   },
