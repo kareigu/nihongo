@@ -1,0 +1,11 @@
+services:
+  nihongo:
+    image: kareigu/nihongo:latest
+    container_name: nihongo
+    restart: unless-stopped
+    ports:
+      - 3546:3030
+    environment:
+      - RUST_LOG=info
+    volumes:
+      - ./certs:/usr/src/nihongo/certs
