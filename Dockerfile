@@ -10,6 +10,10 @@ COPY ./postcss.config.js ./postcss.config.js
 COPY ./tailwind.config.js ./tailwind.config.js
 COPY ./yarn.lock ./yarn.lock
 
+RUN yarn
+
+RUN yarn build:dist
+
 
 FROM rust:buster as rust_builder
 
