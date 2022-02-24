@@ -5,3 +5,10 @@ repl-temp-*
 node_modules
 public/assets
 public/sw.js
+
+# Added by cargo
+
+/target
+
+
+certs/
