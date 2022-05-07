@@ -5,7 +5,7 @@
 ![Picture of the main menu](images/menu.png)
 
 
-## [LIVE VERSION](https://nihongo.mxrr.dev/)
+## [LIVE VERSION](https://nihongo.karei.dev/)
 
 ## Gives you a random selection of 4 options to test your knowledge
 
